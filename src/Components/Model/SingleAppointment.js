@@ -1,19 +1,14 @@
 import { React, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { showAppointmentFormAction } from '../../Actions/ModelAction'
 import './styles.scss'
 import { Link } from 'react-router-dom'
 import UpdateAppointment from './UpdateAppointment'
 
-const SingleAppointment = ({ obj }) => {
-    const dispatch = useDispatch()
-    const showmodal = useSelector((state) => state.showAppointment.showapp)
-
+const SingleAppointment = ({ obj,singalAppointmentCheck,setSingalAppointmentCheck }) => {
+const [showmodal,setShowmodal] = useState(true)
     const [updateAppointmentCheck, setUpdateAppointmentCheck] = useState(false)
 
     const handleClose = () => {
-        dispatch(showAppointmentFormAction(false))
-    }
+        setSingalAppointmentCheck(false)    }
     const updateAppointmentFunc = () => {
         setUpdateAppointmentCheck(true)
     }
@@ -21,9 +16,9 @@ const SingleAppointment = ({ obj }) => {
     return (
         <>
             {
-                updateAppointmentCheck ? <UpdateAppointment obj={obj} />
-                    :
-                    showmodal ?
+               
+                    
+               singalAppointmentCheck ?
 
                         <div className='modal' onClick={() => handleClose()}>
                             <div className='modal-content' onClick={e => e.stopPropagation()}>
@@ -50,7 +45,8 @@ const SingleAppointment = ({ obj }) => {
                                     <button className='buttonclose' onClick={() => handleClose()}>Close </button>
                                     <div></div>
                                 </div>
-                            </div>
+                        </div>
+                      {  updateAppointmentCheck ? <UpdateAppointment setUpdateAppointmentCheck={setUpdateAppointmentCheck} updateAppointmentCheck={updateAppointmentCheck} obj={obj} />:''}
                         </div> : ''
             }
 

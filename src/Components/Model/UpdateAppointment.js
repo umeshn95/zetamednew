@@ -9,7 +9,8 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import axios from 'axios'
 import { useAlert } from "react-alert";
 
-const UpdateAppointment = () => {
+const UpdateAppointment = ({updateAppointmentCheck,setUpdateAppointmentCheck}) => {
+    const [ showmodal,setShowmodal ] = useState(true)
     const dispatch = useDispatch()
     const alert = useAlert();
 
@@ -59,15 +60,13 @@ const UpdateAppointment = () => {
 
     }
 
-    const showmodal = useSelector((state) => state.showAppointment.showapp)
 
     const handleClose = () => {
-        dispatch(showAppointmentFormAction(false))
-    }
+setUpdateAppointmentCheck(false)    }
 
     return (<>
         {
-            showmodal ?
+            updateAppointmentCheck ?
 
                 <div className='modal' onClick={() => handleClose()}>
                     <div className='modal-content' onClick={e => e.stopPropagation()}>

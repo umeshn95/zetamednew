@@ -12,6 +12,8 @@ import axios from 'axios'
 import { useAlert } from "react-alert";
 
 const EventModel = () => {
+
+    const [showmodel,setShowmodel] = useState(true)
     const dispatch = useDispatch()
     const alert = useAlert();
     const { patientSearch } = useSelector((state) => state.patientSearch)
@@ -86,71 +88,72 @@ const EventModel = () => {
     
     const handleClose = () => {
         dispatch(showAppointmentFormAction(false))
+        setShowmodel(false)
     }
     return (<>
         {
-            showmodal ?
+            showmodel?(  <div className='modal' onClick={() => handleClose()}>
+            <div className='modal-content' onClick={e => e.stopPropagation()}>
+                <div className='modal-header'>
+                    <h4 className='modal-title'>Modal title</h4>
+                </div>
+                <div className='modal-body'>
+                    <div>
+                        <div>
+                            <Autocomplete
+                                onChange={(event, newValue) => {
+                                    try {
+                                        setPatientId(newValue.id);
+                                    } catch (response) {
+                                        setPatientId("")
+                                    }
 
-                <div className='modal' onClick={() => handleClose()}>
-                    <div className='modal-content' onClick={e => e.stopPropagation()}>
-                        <div className='modal-header'>
-                            <h4 className='modal-title'>Modal title</h4>
+                                }}
+                                options={rows && rows}
+                                sx={{ width: 300 }}
+                                renderInput={(params) => <TextField {...params} label="Search Patient" />}
+                            />
                         </div>
-                        <div className='modal-body'>
-                            <div>
-                                <div>
-                                    <Autocomplete
-                                        onChange={(event, newValue) => {
-                                            try {
-                                                setPatientId(newValue.id);
-                                            } catch (response) {
-                                                setPatientId("")
-                                            }
-
-                                        }}
-                                        options={rows && rows}
-                                        sx={{ width: 300 }}
-                                        renderInput={(params) => <TextField {...params} label="Search Patient" />}
-                                    />
-                                </div>
-                                <br />
-                                {patientId ? <button>Patient Full Info</button> : ""}
-                                <br />
-                                <br />
-                                <div>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DateTimePicker
-                                            label="Start Date"
-                                            value={startDate}
-                                            onChange={startDateFunc}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-
-                                <br />
-                                <div>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DateTimePicker
-                                            label="End Date"
-                                            value={endDate}
-                                            onChange={endDateFunc}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                                <br />
-                                <button onClick={() => addAppointmentFunc()}>Add Appointment</button>
-                            </div>
-
+                        <br />
+                        {patientId ? <button>Patient Full Info</button> : ""}
+                        <br />
+                        <br />
+                        <div>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DateTimePicker
+                                    label="Start Date"
+                                    value={startDate}
+                                    onChange={startDateFunc}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         </div>
-                        <div className='modal-footer'>
-                            <button className='buttonclose' onClick={() => handleClose()}>Close </button>
-                            <div></div>
+
+                        <br />
+                        <div>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DateTimePicker
+                                    label="End Date"
+                                    value={endDate}
+                                    onChange={endDateFunc}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         </div>
+                        <br />
+                        <button onClick={() => addAppointmentFunc()}>Add Appointment</button>
                     </div>
-                </div> : ''
-        }
+
+                </div>
+                <div className='modal-footer'>
+                    <button className='buttonclose' onClick={() => handleClose()}>Close </button>
+                    <div></div>
+                </div>
+            </div>
+        </div> 
+):''
+
+                      }
 
     </>
     )

@@ -33,12 +33,14 @@ const todaydate = () => {
 
 
 const AppointmentCalender = () => {
+  const [showModel,setShowmodel] = useState(false)
   const dispatch = useDispatch()
   const { loading, patientAppointment } = useSelector((state) => state.patientAppointment)
   const { showApp } = useSelector((state) => state.showAppointment)
   const [currentDate, setCurrentDate] = useState(todaydate())
   const [currentView, setCurrentView] = useState('work-week')
   const [visible, setVisible] = useState()
+  const [changevisible, setChangeVisible] = useState()
   const [appointmentMeta, setAppointmentMeta] = useState()
 
   const [singalData, setSingleDate] = useState("")
@@ -59,18 +61,23 @@ const AppointmentCalender = () => {
   }
 
   const toggleVisibility = (str) => {
+    // console.log(str) 
+  }
+  const changeVisibility = (str) => {
+    setChangeVisible(str)
+  }
+  const dm = (str) => {
     console.log(str)
   }
 
   const onAppointmentMetaChange = (str) => {
     setSingleDate(str.data)
-    dispatch(showAppointmentFormAction(true))
+    // dispatch(showAppointmentFormAction(true))
     setSingalAppointmentCheck(true)
     // console.log(str)
   }
 
   const handleOpen = () => {
-    dispatch(showAppointmentFormAction(true))
     setAddAppointment(true)
   }
 
@@ -85,14 +92,20 @@ const AppointmentCalender = () => {
       <Loader />
     )
   }
-
+  const appData = (str) => {
+    console.log(str.data)
+  }
+  // console.log(singalData)
+  console.log(changevisible)
   return (
     <>
+      
       {
-        addAppointment ? <EventModel />
-          : singalAppointmentCheck ? <SingleAppointment obj={singalData}/>
-          :
-          <Paper>
+      
+      
+        <Paper>
+            <SingleAppointment singalAppointmentCheck={singalAppointmentCheck} setSingalAppointmentCheck={setSingalAppointmentCheck}  obj={singalData}/>
+           
             <Scheduler
               data={patientAppointment && patientAppointment.data}
             >
@@ -100,7 +113,8 @@ const AppointmentCalender = () => {
                 currentDate={currentDate}
                 currentViewName={currentView}
                 onCurrentDateChange={currentViewDate}
-                onCurrentViewNameChange={currentViewNameChange}
+              onCurrentViewNameChange={currentViewNameChange}
+            
               />
 
               <WeekView
@@ -114,9 +128,10 @@ const AppointmentCalender = () => {
               // startDayHour={9}
               // endDayHour={19}
               />
-              <div onClick={() => handleOpen()}><button>show model</button></div>
               <MonthView />
-              <DayView />
+            <DayView
+              onDoubleClick={dm}
+            />
 
               <Toolbar />
               <DateNavigator />
@@ -124,15 +139,15 @@ const AppointmentCalender = () => {
               <ViewSwitcher />
               <AllDayPanel />
               <Appointments />
-              <AppointmentTooltip
-                showCloseButton
-                showOpenButton
-                visible={visible}
-                onVisibilityChange={toggleVisibility}
-                appointmentMeta={appointmentMeta}
-                onAppointmentMetaChange={onAppointmentMetaChange}
+                <AppointmentTooltip
+                  // showOpenButton
+                  // showCloseButton
+                  // visible={visible}
+                  onVisibilityChange={toggleVisibility}
+                  appointmentMeta={appointmentMeta}
+                  onAppointmentMetaChange={onAppointmentMetaChange}
               />
-              <AppointmentForm />
+              {/* <AppointmentForm  onVisibilityChange={changeVisibility} /> */}
             </Scheduler>
           </Paper>
       }
