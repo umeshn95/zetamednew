@@ -29,7 +29,7 @@ import AppointmentCalender from './Components/Appointment/AppointmentCalender';
 
 
 function App() {
-
+  console.log('yes')
   return (
     <BrowserRouter>
       {/* <Header /> */}
