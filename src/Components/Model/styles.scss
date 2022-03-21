@@ -9,16 +9,19 @@
     align-items: center;
     justify-content: center;
     font-family: 'Public Sans', sans-serif;
+    z-index: 999;
   
   }
   
   .modal-content{
     width: 500px;
     background-color: #fff;
+    z-index: 999;
   
   }
   
   .modal-header, .modal-footer{
+    z-index: 999;
     padding: 10px;
   }
   
@@ -27,11 +30,13 @@
   }
   
   .modal-body{
+    z-index: 999;
     padding: 10px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
   }
   
   .buttonclose{
+    z-index: 999;
     cursor: pointer;
   }
