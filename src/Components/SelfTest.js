@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { patientSearchAction } from '../Actions/PatientAction'
 import axios from 'axios'
 import { useAlert } from "react-alert";
-import { showAppointmentFormAction } from '../Actions/ModelAction';
 import EventModel from './Model/EventModel';
 
 
@@ -88,7 +87,7 @@ export default function SelfTest() {
 
 
     const handleOpen = () => {
-        dispatch(showAppointmentFormAction(true))
+        console.log('yes')
       }
 
     return (
