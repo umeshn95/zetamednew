@@ -6,16 +6,18 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import Autocomplete from '@mui/material/Autocomplete';
-import { patientSearchAction } from '../../Actions/PatientAction'
+import { patientSearchAction } from '../../../Actions/PatientAction'
 import axios from 'axios'
 import { useAlert } from "react-alert";
+import Loader from '../../Loading/Loader'
 
-const EventModel = () => {
+const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj }) => {
 
-    const [showmodel,setShowmodel] = useState(true)
     const dispatch = useDispatch()
     const alert = useAlert();
     const { patientSearch } = useSelector((state) => state.patientSearch)
+
+    const [cusLoading, setCusLoading] = useState(false)
 
     const todaydate = () => {
         var date = new Date(),
@@ -26,7 +28,7 @@ const EventModel = () => {
 
 
     const currentViewDate = (str) => {
-        var month, day, year, hours, minutes, seconds;
+        var hours, minutes, seconds;
         var date = new Date(str),
             month = ("0" + (date.getMonth() + 1)).slice(-2),
             day = ("0" + date.getDate()).slice(-2);
@@ -39,8 +41,11 @@ const EventModel = () => {
         return [mySQLDate, mySQLTime].join(" ");
     }
 
-    const [startDate, setStartDate] = useState(todaydate());
-    const [endDate, setEndDate] = useState(todaydate());
+    // console.log(addObj.startDate)
+    // console.log(currentViewDate(addObj.startDate))
+
+    const [startDate, setStartDate] = useState(addObj.status ? currentViewDate(addObj.startDate) : todaydate());
+    const [endDate, setEndDate] = useState(addObj.status ? currentViewDate(addObj.startDate) : todaydate());
     const [patientId, setPatientId] = useState("");
 
     const startDateFunc = (start) => {
@@ -53,6 +58,7 @@ const EventModel = () => {
 
 
     const addAppointmentFunc = async () => {
+        setCusLoading(true)
         const userInfo = JSON.parse(localStorage.getItem('user-details'))
         const config = { headers: { 'Authorization': `Bearer ${userInfo && userInfo.token}` } }
         let id = patientId
@@ -60,13 +66,14 @@ const EventModel = () => {
         let { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient-appointment/`, item, config)
         if (data.status === 201) {
             alert.success(data.details)
+            setAppointAddCheck()
             setStartDate(todaydate())
             setEndDate(todaydate())
             setPatientId("")
         } else {
             alert.error(data.details)
         }
-
+        setCusLoading(false)
     }
 
     useEffect(() => {
@@ -82,15 +89,22 @@ const EventModel = () => {
             label: item.name,
         });
     })
-
-    const showmodal = useSelector((state) => state.showAppointment.showapp)
     
     const handleClose = () => {
-        setShowmodel(false)
+        setAddObj({status : false})
+        setAppointAddCheck(false)
     }
+
+    if (cusLoading) {
+        return (
+            <Loader />
+        )
+    }
+
     return (<>
         {
-            showmodel?(  <div className='modal' onClick={() => handleClose()}>
+            appointAddCheck?
+            (  <div className='modal' onClick={() => handleClose()}>
             <div className='modal-content' onClick={e => e.stopPropagation()}>
                 <div className='modal-header'>
                     <h4 className='modal-title'>Modal title</h4>
@@ -157,5 +171,5 @@ const EventModel = () => {
     )
 }
 
-export default EventModel
+export default AddAppointment
 
