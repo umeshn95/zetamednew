@@ -25,7 +25,7 @@ import SelfTest from './Components/SelfTest';
 import PatientGroup from './Components/Patient/PatientGroup';
 import PatientGroupInfo from './Components/Patient/PatientGroupInfo';
 import UpdatePatientGroup from './Components/Patient/UpdatePatientGroup';
-import AppointmentCalender from './Components/Appointment/AppointmentCalender';
+import FullCalender from './Components/FullCalender/FullCalender';
 
 
 function App() {
@@ -41,7 +41,6 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/password-reset-email" component={ResetPasswordEmail} />
         <Route exact path="/password-reset/:token" component={ResetPassword} />
-        <Route exact path="/appointment" component={AppointmentCalender} />
         <Prodected exact path="/password-change" component={PasswordChange} />
         <Prodected exact path="/profile" component={Profile} />
         <Prodected exact path="/profile-change" component={ProfileChange} />
@@ -65,6 +64,7 @@ function App() {
 
 
 
+        <Route exact path="/calender" component={FullCalender} />
        <Prodected exact path="/self" component={SelfTest} />
 
       </Switch>

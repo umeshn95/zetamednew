@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import './styles.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import { showAppointmentFormAction } from '../../Actions/ModelAction'
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -87,7 +86,6 @@ const EventModel = () => {
     const showmodal = useSelector((state) => state.showAppointment.showapp)
     
     const handleClose = () => {
-        dispatch(showAppointmentFormAction(false))
         setShowmodel(false)
     }
     return (<>

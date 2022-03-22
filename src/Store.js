@@ -5,7 +5,6 @@ import {
     PatientAppointmentReducer, PatientSearchReducer
 } from './Reducers/PatientReducers'
 import { countryReducer } from './Reducers/MicroApiReducers'
-import { AppointMentFormReducer } from './Reducers/ModelReducers'
 
 
 const Store = configureStore({
@@ -25,7 +24,6 @@ const Store = configureStore({
         allCountry : countryReducer,
 
         // model
-        showAppointment: AppointMentFormReducer,
     } 
 })
 
