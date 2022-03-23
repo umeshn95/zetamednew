@@ -29,7 +29,6 @@ import FullCalender from './Components/FullCalender/FullCalender';
 
 
 function App() {
-  console.log('yes')
   return (
     <BrowserRouter>
       {/* <Header /> */}
@@ -55,10 +54,6 @@ function App() {
        <Prodected exact path="/patient-group" component={PatientGroup} />
        <Prodected exact path="/patient-group/:id" component={PatientGroupInfo} />
        <Prodected exact path="/patient-group-update/:id" component={UpdatePatientGroup} />
-
-
-
-
 
 
 
