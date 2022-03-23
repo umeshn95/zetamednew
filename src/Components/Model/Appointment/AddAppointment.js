@@ -10,6 +10,8 @@ import { patientAppointmentAction, patientSearchAction } from '../../../Actions/
 import axios from 'axios'
 import { useAlert } from "react-alert";
 import Loader from '../../Loading/Loader'
+import Grid from "@mui/material/Grid";
+import '../../Patient/styles.scss'
 
 const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj }) => {
 
@@ -132,8 +134,13 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
             appointAddCheck?
             (  <div className='modal' onClick={() => handleClose()}>
             <div className='modal-content' onClick={e => e.stopPropagation()}>
-                <div className='modal-header'>
-                    <h4 className='modal-title'>Modal title</h4>
+                        <div className='modal-header'>
+                            <Grid container >
+                                    <Grid item xl={6}><h4 className='modal-title'>Add Appointment</h4></Grid>
+                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}><img onClick={() => handleClose()} src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
+                            </Grid>
+                            
+                            
                 </div>
                 <div className='modal-body'>
                     <div>
@@ -148,15 +155,17 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
 
                                 }}
                                 options={rows && rows}
-                                sx={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Search Patient" />}
+                                sx={{ width: 350 }}
+                                renderInput={(params) => <TextField {...params} label="Patient Name" />}
                             />
-                        </div>
+                                </div>
                         <br />
-                        {patientId ? <button>Patient Full Info</button> : ""}
+                                
+                        {patientId ? (<><button className="custom-btn btn-6">Patient Full Info</button> <br /></>) : ""}
+                       
                         <br />
-                        <br />
-                        <div>
+                                <Grid container spacing={2}>
+                                    <Grid item  xl={6}>  <div>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
                                     label="Start Date"
@@ -165,10 +174,8 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
-                        </div>
-
-                        <br />
-                        <div>
+                        </div></Grid>
+                                    <Grid item xl={6}>  <div>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
                                     label="End Date"
@@ -177,14 +184,21 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
-                        </div>
-                        <br />
-                        <button onClick={() => addAppointmentFunc()}>Add Appointment</button>
+                                    </div>
+                                    </Grid>
+                                    <Grid item xl={12} align='center'>   <button className="custom-btn btn-6" onClick={() => addAppointmentFunc()} ><span>Add Appointment</span></button></Grid>
+                       </Grid>
+                              
+
+                      
+                      
+                                <br />
+                               
                     </div>
 
                 </div>
                 <div className='modal-footer'>
-                    <button className='buttonclose' onClick={() => handleClose()}>Close </button>
+                    
                     <div></div>
                 </div>
             </div>
