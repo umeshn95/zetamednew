@@ -7,9 +7,13 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import axios from 'axios'
 import { useAlert } from "react-alert";
 import Loader from '../../Loading/Loader';
+import { useDispatch } from 'react-redux'
+import { patientAppointmentAction } from '../../../Actions/PatientAction';
+
 
 const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, obj }) => {
     const alert = useAlert();
+    const dispatch = useDispatch()
 
     const [cusLoading, setCusLoading] = useState(false)
 
@@ -48,6 +52,7 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
         let item = { startDate, endDate, title }
         let { data } = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient-appointment/${obj.id}/`, item, config)
         if (data.status === 202) {
+            dispatch(patientAppointmentAction())
             alert.success(data.details)
         } else {
             alert.error(data.details)

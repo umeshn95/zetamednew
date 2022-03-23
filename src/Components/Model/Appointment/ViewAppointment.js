@@ -5,17 +5,25 @@ import axios from 'axios'
 import { useAlert } from "react-alert";
 import Loader from '../../Loading/Loader'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { patientAppointmentAction } from '../../../Actions/PatientAction';
+
 
 const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
     const alert = useAlert()
-
+    const dispatch = useDispatch()
     const [cusLoading, setCusLoading] = useState(false)
     const [updateAppointmentCheck, setUpdateAppointmentCheck] = useState(false)
-
+    const [checkbox, setCheckbox] = useState()
 
     const handleClose = () => {
         setAppointViewCheck(false)
     }
+
+    const checkBoxFunc = (c) => {
+        setCheckbox(c)
+    }
+    console.log(checkbox)
 
     const dateFormate = (str) => {
         var hours, minutes, seconds;
@@ -45,7 +53,7 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
             .then((response) => {
                 if (response.data.status === 200) {
                     setAppointViewCheck(false)
-                    // sessionStorage.setItem("petientSignal", "3");
+                    dispatch(patientAppointmentAction())
                     alert.success(response.data.details);
                 } else {
                     alert.error(response.data.details);
@@ -95,7 +103,9 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                                         <button onClick={() => deleteAppointment()}>Delete Appointment</button>
                                         <Link to={`/patient/${obj.patientId}`} ><button>Full Patient Info</button></Link>
                                         <br />
-                                        <input type="checkbox"  name="vehicle1" value="Bike" />
+                                        <input type="checkbox"  name="" value={checkbox} 
+                                            onClick={() => checkBoxFunc(checkbox ? true : false)}
+                                        />
                                         <label > Is Appointment Done</label>
                                         <br />
 
