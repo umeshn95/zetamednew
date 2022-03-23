@@ -51,13 +51,13 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
         hours = ("0" + date.getHours()).slice(-2);
         minutes = ("0" + date.getMinutes()).slice(-2);
         seconds = ("0" + date.getSeconds()).slice(-2);
-        
+
         var myHours = hours
         var modifyMinute = ''
 
-        if(minutes === '00'){
+        if (minutes === '00') {
             modifyMinute = 30
-        } else{
+        } else {
             myHours = Number(myHours) + 1
             modifyMinute = '00'
         }
@@ -95,7 +95,7 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
             setStartDate(todaydate())
             setEndDate(todaydate())
             setPatientId("")
-            setAddObj({status : false})
+            setAddObj({ status: false })
             dispatch(patientAppointmentAction())
             alert.success(data.details)
         } else {
@@ -117,9 +117,9 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
             label: `Name : ${item.name}, Mobile No : ${item.mobileNo}`,
         });
     })
-    
+
     const handleClose = () => {
-        setAddObj({status : false})
+        setAddObj({ status: false })
         setAppointAddCheck(false)
     }
 
@@ -131,6 +131,66 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
 
     return (<>
         {
+<<<<<<< HEAD
+            appointAddCheck ?
+                (<div className='modal' onClick={() => handleClose()}>
+                    <div className='modal-content' onClick={e => e.stopPropagation()}>
+                        <div className='modal-header'>
+                            <h4 className='modal-title'>Modal title</h4>
+                        </div>
+                        <div className='modal-body'>
+                            <div>
+                                <div>
+                                    <Autocomplete
+                                        onChange={(event, newValue) => {
+                                            try {
+                                                setPatientId(newValue.id);
+                                            } catch (response) {
+                                                setPatientId("")
+                                            }
+
+                                        }}
+                                        options={rows && rows}
+                                        sx={{ width: 300 }}
+                                        renderInput={(params) => <TextField {...params} label="Search Patient" />}
+                                    />
+                                </div>
+                                <br />
+                                {patientId ? <button>Patient Full Info</button> : ""}
+                                <br />
+                                <br />
+                                <div>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DateTimePicker
+                                            label="Start Date"
+                                            value={startDate}
+                                            onChange={startDateFunc}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+
+                                <br />
+                                <div>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DateTimePicker
+                                            label="End Date"
+                                            value={endDate}
+                                            onChange={endDateFunc}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+                                <br />
+                                <button onClick={() => addAppointmentFunc()}>Add Appointment</button>
+                            </div>
+
+                        </div>
+                        <div className='modal-footer'>
+                            <button className='buttonclose' onClick={() => handleClose()}>Close </button>
+                            <div></div>
+                        </div>
+=======
             appointAddCheck?
             (  <div className='modal' onClick={() => handleClose()}>
             <div className='modal-content' onClick={e => e.stopPropagation()}>
@@ -194,9 +254,12 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
                       
                                 <br />
                                
+>>>>>>> origin/master
                     </div>
-
                 </div>
+<<<<<<< HEAD
+                ) : ''
+=======
                 <div className='modal-footer'>
                     
                     <div></div>
@@ -204,8 +267,9 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
             </div>
         </div> 
 ):''
+>>>>>>> origin/master
 
-                      }
+        }
 
     </>
     )
