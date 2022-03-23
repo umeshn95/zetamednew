@@ -9,6 +9,7 @@ import { useAlert } from "react-alert";
 import Loader from '../../Loading/Loader';
 import { useDispatch } from 'react-redux'
 import { patientAppointmentAction } from '../../../Actions/PatientAction';
+import Grid from "@mui/material/Grid";
 
 
 const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, obj }) => {
@@ -79,28 +80,29 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
                     <div className='modal' onClick={() => handleClose()}>
                         <div className='modal-content' onClick={e => e.stopPropagation()}>
                             <div className='modal-header'>
-                                <h4 className='modal-title'>Modal title</h4>
+                            <Grid container >
+                                    <Grid item xl={6}><h4 className='modal-title'>Update Appointment</h4></Grid>
+                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}><img onClick={() => handleClose()} src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
+                            </Grid>
                             </div>
                             <div className='modal-body'>
-                                <div>
-                                    <div>
-                                        <input type="text"
-                                            value={patientName}
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                        <TextField id="outlined-basic" label="Patient Name" variant="outlined"    value={patientName}
                                             placeholder="Patient Name"
-                                            onChange={(e) => setPatientName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <input type="text"
-                                            value={title}
-                                            placeholder="Title"
-                                            onChange={(e) => setTitle(e.target.value)}
-                                        />
-                                    </div>
-                                    <br />
-                                    <br />
-                                    <div>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            onChange={(e) => setPatientName(e.target.value)}/>
+                                       
+                                        
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                        <TextField id="outlined-basic" label="Patient Name" variant="outlined"    value={patientName}
+                                            placeholder="Patient Name"
+                                            onChange={(e) => setPatientName(e.target.value)}/>
+                                       
+                                        
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <DateTimePicker
                                                 label="Start Date"
                                                 value={startDate}
@@ -108,11 +110,11 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                         </LocalizationProvider>
-                                    </div>
-
-                                    <br />
-                                    <div>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                       
+                                        
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <DateTimePicker
                                                 label="End Date"
                                                 value={endDate}
@@ -120,15 +122,26 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                         </LocalizationProvider>
-                                    </div>
-                                    <br />
-                                    <button onClick={() => UpdateAppointmentFunc()}>Change Appointment</button>
+                                       
+                                        
+                                    </Grid>
+                                    <Grid align='center' item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                    <button className="custom-btn btn-6" onClick={() => UpdateAppointmentFunc()}>Update Now </button>
+                                       
+                                        
+                                    </Grid>
+
+                                </Grid>
+                                <div>
+                                    
+                                
+
+                                  
+                                    
                                 </div>
 
                             </div>
                             <div className='modal-footer'>
-                                <button className='buttonclose' onClick={() => handleClose()}>Close </button>
-                                <div></div>
                             </div>
                         </div>
                     </div> : ''
