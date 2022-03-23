@@ -7,6 +7,7 @@ import Loader from '../../Loading/Loader'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { patientAppointmentAction } from '../../../Actions/PatientAction';
+import Grid from "@mui/material/Grid";
 
 
 const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
@@ -86,22 +87,28 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                         <div className='modal' onClick={() => handleClose()}>
                             <div className='modal-content' onClick={e => e.stopPropagation()}>
                                 <div className='modal-header'>
-                                    <h4 className='modal-title'>Modal title</h4>
+                                <Grid container >
+                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}><h4 className='modal-title'>Appointment Details</h4></Grid>
+                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6} align='right' style={{cursor:'pointer'}}><img onClick={() => handleClose()} src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
+                            </Grid>
                                 </div>
                                 <div className='modal-body'>
-                                    <h1>Patient Appointment</h1>
+                                    <Grid container>
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Patient Name : <b>{obj.patientName}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Problem : <b>{obj.title}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Start Time : <b>{obj.start}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>End Time : <b>{obj.end}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Appointment Add Time: <b>{obj.createAt}</b></p></Grid>
+                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4}><button className="custom-btn btn-6" onClick={() => updateAppointmentFunc()}>Update</button></Grid>
+                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4}> <button className="custom-btn btn-6" onClick={() => deleteAppointment()}>Delete </button></Grid>
+                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4} align='center'>  <Link to={`/patient/${obj.patientId}`} ><button className="custom-btn btn-6">Full Info</button></Link></Grid>
+                                      
+                                    </Grid>
+                                    
                                     <div>
-                                        <h1>Patient Name : {obj.patientName}</h1>
-                                        <h1>Problem : {obj.title}</h1>
-                                        <h1>Start Time : {dateFormate(obj.start)}</h1>
-                                        <h1>End Time : {dateFormate(obj.end)}</h1>
-                                        <h1>Appointment Add Time : {obj.createAt}</h1>
-                                    </div>
-                                    <br />
-                                    <div>
-                                        <button onClick={() => updateAppointmentFunc()}>Change Appointment</button>
-                                        <button onClick={() => deleteAppointment()}>Delete Appointment</button>
-                                        <Link to={`/patient/${obj.patientId}`} ><button>Full Patient Info</button></Link>
+                                        
+                                       
+                                      
                                         <br />
                                         <input type="checkbox"  name="" value={checkbox} 
                                             onClick={() => checkBoxFunc(checkbox ? true : false)}
@@ -112,7 +119,7 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                                     </div>
                                 </div>
                                 <div className='modal-footer'>
-                                    <button className='buttonclose' onClick={() => handleClose()}>Close </button>
+                                   
                                     <div></div>
                                 </div>
                             </div>
