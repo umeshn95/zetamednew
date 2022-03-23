@@ -12,7 +12,7 @@ import { patientAppointmentAction } from '../../../Actions/PatientAction';
 import Grid from "@mui/material/Grid";
 
 
-const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, obj }) => {
+const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, obj, setAppointViewCheck }) => {
     const alert = useAlert();
     const dispatch = useDispatch()
 
@@ -50,16 +50,18 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
         setCusLoading(true)
         const userInfo = JSON.parse(localStorage.getItem('user-details'))
         const config = { headers: { 'Authorization': `Bearer ${userInfo && userInfo.token}` } }
-        let item = { startDate, endDate, title }
+        let check = '1'
+        let item = { startDate, endDate, patientName, check }
         let { data } = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient-appointment/${obj.id}/`, item, config)
         if (data.status === 202) {
+            setUpdateAppointmentCheck(false)
+            setAppointViewCheck(false)
             dispatch(patientAppointmentAction())
             alert.success(data.details)
         } else {
             alert.error(data.details)
         }
         setCusLoading(false)
-
     }
 
     const handleClose = () => {
@@ -82,24 +84,25 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
                             <div className='modal-header'>
                             <Grid container >
                                     <Grid item xl={6}><h4 className='modal-title'>Update Appointment</h4></Grid>
-                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}><img onClick={() => handleClose()} src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
+                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}>
+                                    <img onClick={() => handleClose()} alt="img"  src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png" /> </Grid>
                             </Grid>
                             </div>
                             <div className='modal-body'>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                        <TextField id="outlined-basic" label="Patient Name" variant="outlined"    value={patientName}
+                                        <TextField id="outlined-basic" label="Patient Name" variant="outlined"    value={title}
                                             placeholder="Patient Name"
-                                            onChange={(e) => setPatientName(e.target.value)}/>
-                                       
-                                        
+                                            disabled={true}
+                                            onChange={(e) => setTitle(e.target.value)}/>
                                     </Grid>
+
                                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                        <TextField id="outlined-basic" label="Patient Name" variant="outlined"    value={patientName}
-                                            placeholder="Patient Name"
+                                        <TextField id="outlined-basic" 
+                                        label="Title" variant="outlined"    
+                                        value={patientName}
+                                            placeholder="Patient Title"
                                             onChange={(e) => setPatientName(e.target.value)}/>
-                                       
-                                        
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -133,11 +136,6 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
 
                                 </Grid>
                                 <div>
-                                    
-                                
-
-                                  
-                                    
                                 </div>
 
                             </div>

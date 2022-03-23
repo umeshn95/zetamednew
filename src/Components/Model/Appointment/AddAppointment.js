@@ -137,7 +137,8 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
                         <div className='modal-header'>
                             <Grid container >
                                     <Grid item xl={6}><h4 className='modal-title'>Add Appointment</h4></Grid>
-                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}><img onClick={() => handleClose()} src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
+                                    <Grid item xl={6} align='right' style={{cursor:'pointer'}}>
+                                    <img onClick={() => handleClose()} alt="img" src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png"/> </Grid>
                             </Grid>
                             
                             

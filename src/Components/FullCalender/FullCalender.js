@@ -89,6 +89,7 @@ const FullCalender = () => {
             end: info.event._def.extendedProps.endDate,
             patientId: info.event._def.extendedProps.patient,
             patientName: info.event._def.extendedProps.patientName,
+            isAppointmentDone: info.event._def.extendedProps.isAppointmentDone,
             createAt: info.event._def.extendedProps.createAt,
           }
           setAppointmentData(obj)
