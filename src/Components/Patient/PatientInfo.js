@@ -56,7 +56,7 @@ const PatientInfo = ({ match }) => {
           alert.error(response.data.details);
         }
       });
-    setCusLoading(false);
+    // setCusLoading(false);
   };
 
   if (loading || cusLoading) {

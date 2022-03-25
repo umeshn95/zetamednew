@@ -31,7 +31,7 @@ const PatientGroup = () => {
                     alert.error(response.data.details)
                 }
             })
-        setCusLoading(false)
+        // setCusLoading(false)
     }
 
     const groupWisedata = (id) => {

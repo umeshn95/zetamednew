@@ -37,7 +37,7 @@ const UpdatePatientGroup = ({ match }) => {
         } else {
             alert.error(data.details)
         }
-        setCusLoading(false)
+        // setCusLoading(false)
     }
 
     useEffect(() => {

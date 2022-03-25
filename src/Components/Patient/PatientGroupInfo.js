@@ -36,7 +36,7 @@ const PatientGroupInfo = ({ match }) => {
                     alert.error(response.data.details)
                 }
             })
-        setCusLoading(false)
+        // setCusLoading(false)
     }
 
     useEffect(() => {

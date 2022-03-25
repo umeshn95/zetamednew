@@ -246,17 +246,15 @@ margin-top: 10px;
 
 .bbutton{
   font-family: 'Public Sans', sans-serif;
-
+border: 1px solid rgba(0, 0, 0, 0.171);
 	position: relative;
   width: 100%;
-  height: 50px;
+  height: 40px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 	overflow: hidden;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 3px 8px rgba(0,0,0,0.1);
-	transition: all 0.3s cubic-bezier(0, 0.22, .3, 1);
 	
 	&:before{
 		content: '';
@@ -277,46 +275,11 @@ margin-top: 10px;
 	}
 
 	&._1{ background: #2980b9 }
-	&._2{	background: #8e44ad }
-	&._3{	background: #16a085 }
+	&._2{	background: white }
+	&._3{	background: #58B87A }
 	&._4{	background: #e74c3c }
 
 
-	.back{
-		position: absolute;
-		width: 0;
-		height: 0;
-		filter: url(#filter);
-		border-radius: 50%;
-		z-index: 5;
-		transition: all 2.5s cubic-bezier(0.1, 0.22, .3, 1);
-	}
-
-	&._1 .back{
-		left: -50%;
-		top: -50%;
-		background: #27ae60;
-	}
-	&._2 .back{
-		right: -50%;
-		top: -50%;
-		background: #c0392b;
-	}
-	&._3 .back{
-		left: -50%;
-		bottom: -50%;
-		background: #34495e;
-	}
-	&._4 .back{
-		right: -50%;
-		bottom: -50%;
-		background: #2980b9;
-	}
-
-	&:hover .back{
-		width: calc(2 * var(--width));
-		height: calc(2 * var(--height));
-	}
 }
 
 @media only screen and (max-width: 750px) {

@@ -83,7 +83,7 @@ const UpdatePatient = ({ match }) => {
         } else {
             alert.error("Please Select D.O.B")
         }
-        setCusLoading(false)
+        // setCusLoading(false)
     }
 
     const onDateChange = (newDate) => {

@@ -26,6 +26,8 @@ import PatientGroup from './Components/Patient/PatientGroup';
 import PatientGroupInfo from './Components/Patient/PatientGroupInfo';
 import UpdatePatientGroup from './Components/Patient/UpdatePatientGroup';
 import FullCalender from './Components/FullCalender/FullCalender';
+import Homepage from './Components/HomePage/Homepage';
+import AddPrescription from './Components/Prescription/AddPrescription';
 
 
 function App() {
@@ -38,11 +40,13 @@ function App() {
         <Prodected exact path="/otp-verify" component={Otp} />
         <Prodected exact path="/registration" component={Registration} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/home" component={Homepage} />
         <Route exact path="/password-reset-email" component={ResetPasswordEmail} />
         <Route exact path="/password-reset/:token" component={ResetPassword} />
         <Prodected exact path="/password-change" component={PasswordChange} />
         <Prodected exact path="/profile" component={Profile} />
         <Prodected exact path="/profile-change" component={ProfileChange} />
+        <Prodected exact path="/prescription" component={AddPrescription} />
 
        {/*Patients  */}
        <Prodected exact path="/patient" component={PatientList} />

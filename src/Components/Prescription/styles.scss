@@ -1,0 +1,107 @@
+.prescription_main{
+    width: 75%;
+}
+
+.zetamed_prescription_addprescription{
+    font-family: 'Public Sans', sans-serif;
+    font-size: 26px;
+}
+
+.zetamed_prescription_patientname{
+    font-family: 'Public Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.212);
+    padding: 3px;
+}
+.zetamed_prescription_patientname1{
+    font-family: 'Public Sans', sans-serif;
+    font-size: 16px;
+    padding: 3px;
+}
+
+.zetamed_prescription_mobile{
+    font-family: 'Public Sans', sans-serif;
+    display: flex;
+    padding: 4px;
+    gap: 4px;
+}
+
+.zetamed_prescription_add_drug{
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    padding: 10px;
+    background: #DDDDDD;
+}
+
+.zetamed_prescription_round1{
+    padding: 5px 2px;
+    font-size: 17px;
+    outline: none;
+    font-family: 'Public Sans', sans-serif;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    border: 0.5px solid rgba(0, 0, 255, 0.397);
+}
+
+.zetamed_prescription_round{
+    padding: 9px;
+    font-size: 15px;
+    font-family: 'Public Sans', sans-serif;
+    outline: none;
+    width: 120px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    border: 0.5px solid rgba(0, 0, 255, 0.397);
+
+}
+
+.zetamed_prescription_table{
+    border: 1px solid rgba(0, 0, 0, 0.192);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zetamed_prescription_table img{
+cursor: pointer;
+}
+
+
+
+/* CSS */
+.button-66 {
+  background-color: #0a6bff;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inherit;
+  font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+  min-height: 56px;
+  min-width: 120px;
+  padding: 16px 20px;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  transition: all .2s cubic-bezier(.22, .61, .36, 1);
+}
+
+.button-66:hover {
+  background-color: #065dd8;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .button-66 {
+    padding: 16px 44px;
+    min-width: 150px;
+  }
+}

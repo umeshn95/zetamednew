@@ -84,7 +84,7 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
 
 
     const addAppointmentFunc = async () => {
-        setCusLoading(true)
+        // setCusLoading(true)
         const userInfo = JSON.parse(localStorage.getItem('user-details'))
         const config = { headers: { 'Authorization': `Bearer ${userInfo && userInfo.token}` } }
         let id = patientId
@@ -157,7 +157,8 @@ const AddAppointment = ({ appointAddCheck, setAppointAddCheck, addObj, setAddObj
                                 }}
                                 options={rows && rows}
                                 sx={{ width: 350 }}
-                                renderInput={(params) => <TextField {...params} label="Patient Name" />}
+                                        renderInput={(params) => <TextField {...params} label="Patient Name" />}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id}
                             />
                                 </div>
                         <br />

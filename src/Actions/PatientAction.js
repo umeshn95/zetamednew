@@ -38,6 +38,7 @@ export const patientAction = (page, filter) => async (dispatch) => {
         dispatch({ type: REQUEST_PATIENT })
         let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/?query=${filter}&page=${page}`, config)
         dispatch({ type: SUCCESS_PATIENT, payload: data })
+        console.log(data)
     } catch (error) {
         dispatch({ type: FAIL_PATIENT, payload: error.response.details })
     }

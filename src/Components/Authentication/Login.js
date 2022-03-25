@@ -37,7 +37,7 @@ const Login = () => {
           alert.success("Login Successfully");
           history.push("/");
         });
-        setCusLoading(false)
+        // setCusLoading(false)
     } catch (error) {
       alert.error(error.response.data.detail);
       setCusLoading(false)

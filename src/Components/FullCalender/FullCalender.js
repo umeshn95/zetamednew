@@ -98,8 +98,8 @@ const FullCalender = () => {
           info.el.style.borderColor = "red";
         }}
         editable={true}
-        startEditable={true}
-        durationEditable={true}
+        // startEditable={true}
+        // durationEditable={true}
         eventDisplay="block"
       // eventBackgroundColor='green'
       />

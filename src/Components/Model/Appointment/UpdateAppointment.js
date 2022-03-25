@@ -61,7 +61,7 @@ const UpdateAppointment = ({ updateAppointmentCheck, setUpdateAppointmentCheck, 
         } else {
             alert.error(data.details)
         }
-        setCusLoading(false)
+        // setCusLoading(false)
     }
 
     const handleClose = () => {
