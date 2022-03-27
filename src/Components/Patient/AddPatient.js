@@ -1,21 +1,12 @@
-import { Fragment, React, useState, useEffect } from "react";
+import { Fragment, React, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { patientGroupAction } from "../../Actions/PatientAction";
-import { countryAction } from "../../Actions/MicroApiAction";
 import Calendar from "react-calendar";
 import Grid from "@mui/material/Grid";
-
 import { useAlert } from "react-alert";
 
 const AddPatient = () => {
   const alert = useAlert();
   const userInfo = JSON.parse(localStorage.getItem("user-details"));
-  const dispatch = useDispatch();
-  const { allCountry } = useSelector((state) => state.allCountry);
-  const { patientGroup } = useSelector((state) => state.patientGroup);
-  // console.log(allCountry)
-  // console.log(patientGroup)
   const [selectedImage, setSelectedImage] = useState("");
   const [letestImg, setLetestImg] = useState("");
 
@@ -26,103 +17,79 @@ const AddPatient = () => {
   const [proofId, setProofId] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
   const [problem, setProblem] = useState("");
   const [problemDescription, setProblemDescription] = useState("");
-  const [patientGroupp, setPatientGroupp] = useState("");
   const [calenderTrueFalse, setCalenderTrueFalse] = useState(false);
 
 
-    const addPatientFunc = async (e) => {
-        e.preventDefault();
-        if(age){
-            const myForm = new FormData();
-            myForm.set("name", name);
-            myForm.set("age", age);
-            myForm.set("gender", gender);
-            myForm.set("whichProof", whichProof);
-            myForm.set("proofId", proofId);
-            myForm.set("mobileNo", mobileNo);
-            myForm.set("email", email);
-            myForm.set("city", city);
-            myForm.set("state", state);
-            myForm.set("country", country);
-            myForm.set("zipcode", zipcode);
-            myForm.set("problem", problem);
-            myForm.set("problemDescription", problemDescription);
-            let patientGroup = patientGroupp
-            myForm.set("patientGroup", patientGroup)
-            let patientImage = selectedImage;
-            myForm.set("patientImage", patientImage);
-    
-    
-            const config = {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${userInfo && userInfo.access}`,
-                },
-            };
-            const { data } = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/`, myForm, config);
-            if (data.status === 201) {
-                alert.success(data.details)
-                setName("")
-                setAge("")
-                setGender("")
-                setWhichProof("")
-                setProofId("")
-                setMobileNo("")
-                setEmail("")
-                setCity("")
-                setState("")
-                setCountry("")
-                setZipcode("")
-                setProblem("")
-                setProblemDescription("")
-                setPatientGroupp("")
-                setSelectedImage("")
-                setLetestImg("")
-                sessionStorage.setItem("petientSignal", "1")
-            } else {
-                alert.error(data.details)
-            }
-        }else{
-            alert.error("Please Select D.O.B")
-        }
+  const addPatientFunc = async (e) => {
+    e.preventDefault();
+    if (age) {
+      const myForm = new FormData();
+      myForm.set("name", name);
+      myForm.set("age", age);
+      myForm.set("gender", gender);
+      myForm.set("whichProof", whichProof);
+      myForm.set("proofId", proofId);
+      myForm.set("mobileNo", mobileNo);
+      myForm.set("email", email);
+      myForm.set("address", address);
+      myForm.set("problem", problem);
+      myForm.set("problemDescription", problemDescription);
+      let patientImage = selectedImage;
+      myForm.set("patientImage", patientImage);
 
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo && userInfo.access}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/`, myForm, config);
+      if (data.status === 201) {
+        alert.success(data.details)
+        setName("")
+        setAge("")
+        setGender("")
+        setWhichProof("")
+        setProofId("")
+        setMobileNo("")
+        setEmail("")
+        setAddress("")
+        setProblem("")
+        setProblemDescription("")
+        setSelectedImage("")
+        setLetestImg("")
+        sessionStorage.setItem("petientSignal", "1")
+      } else {
+        alert.error(data.details)
+      }
+    } else {
+      alert.error("Please Select D.O.B")
     }
-  
+  }
 
 
- const onDateChange = (newDate) => {
+
+  const onDateChange = (newDate) => {
     let dateArray = new Date(newDate).toLocaleDateString().split("/")
     setAge(String(`${Number(dateArray[2])}-${Number(dateArray[0])}-${Number(dateArray[1])}`))
     setCalenderTrueFalse(false)
-}
-const updateProfileDataChange = (e) => {
+  }
+  const updateProfileDataChange = (e) => {
     const reader = new FileReader();
     reader.onload = () => {
-        if (reader.readyState === 2) {
-            setLetestImg(reader.result);
-            setSelectedImage(e.target.files[0]);
-        }
+      if (reader.readyState === 2) {
+        setLetestImg(reader.result);
+        setSelectedImage(e.target.files[0]);
+      }
     };
     reader.readAsDataURL(e.target.files[0]);
-};
+  };
 
-useEffect(() => {
-    if (allCountry && allCountry.length === 0) {
-        dispatch(countryAction())
-    }
-    if (patientGroup && patientGroup.length === 0) {
-        dispatch(patientGroupAction())
-    }
-}, [dispatch, allCountry, patientGroup, ])
-
-let cityArray = []
   return (
     <Fragment>
       <Grid container>
@@ -236,10 +203,10 @@ let cityArray = []
                 </Grid>
               </Grid>
 
-                          {/*date of birth  */}
+              {/*date of birth  */}
 
 
-                          <Grid
+              <Grid
                 item
                 xs={12}
                 sm={12}
@@ -259,40 +226,40 @@ let cityArray = []
                     align="center"
                     justify="center"
                   >
-                                      <div className="zetamed_add_patient_name"
-                                      >D.O.B</div>
+                    <div className="zetamed_add_patient_name"
+                    >D.O.B</div>
                   </Grid>
-                                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9} style={{display:'flex'}}>
-                                      <input
-                                        //   style={{display:calenderTrueFalse ? 'none' : ''}}
+                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9} style={{ display: 'flex' }}>
+                    <input
+                      //   style={{display:calenderTrueFalse ? 'none' : ''}}
                       className="zetamed_main_otp_actualinput"
                       type="text"
                       required
-                      placeholder="Enter Full Name......"
+                      placeholder="Date of Birth......"
                       value={age}
                       onChange={(e) => setAge(e.target.value)}
                     />
-                                      <button
-                                          className="zetamed_add_patient_date_of_birth"
-                                          style={{display:calenderTrueFalse ? 'none' : ''}}
-                                          
-          onClick={() => setCalenderTrueFalse(calenderTrueFalse ? false : true)}
-        >
-          
-        </button>
-        <div  >
-          {calenderTrueFalse ? (
-                                              <Calendar
-                                                 
-              onChange={onDateChange}
-              // value={age}
-              showNeighboringMonth={false}
-              locale={"en-US"}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+                    <button
+                      className="zetamed_add_patient_date_of_birth"
+                      style={{ display: calenderTrueFalse ? 'none' : '' }}
+
+                      onClick={() => setCalenderTrueFalse(calenderTrueFalse ? false : true)}
+                    >
+
+                    </button>
+                    <div  >
+                      {calenderTrueFalse ? (
+                        <Calendar
+
+                          onChange={onDateChange}
+                          // value={age}
+                          showNeighboringMonth={false}
+                          locale={"en-US"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
@@ -440,8 +407,8 @@ let cityArray = []
                     />
                   </Grid>
                 </Grid>
-                          </Grid>
-                          {/* image upload start */}
+              </Grid>
+              {/* image upload start */}
               <Grid
                 item
                 xs={12}
@@ -465,28 +432,28 @@ let cityArray = []
                     <div className="zetamed_add_patient_name">Patient Image</div>
                   </Grid>
                   <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                  <img
-              src={letestImg ? letestImg : ""}
-              alt={letestImg ? "Patient Images" : ""}
-            />
-            <input
-              style={{
-                border: "5px solid #ccc",
-                display: "inline-block",
-                padding: "6px 12px",
-                cursor: "pointer",
-              }}
-              type="file"
-              name="Patient Images"
-              accept="image/*"
-              onChange={updateProfileDataChange}
-              placeholder="upload image"
-            />
+                    <img
+                      src={letestImg ? letestImg : ""}
+                      alt={letestImg ? "Patient Images" : ""}
+                    />
+                    <input
+                      style={{
+                        border: "5px solid #ccc",
+                        display: "inline-block",
+                        padding: "6px 12px",
+                        cursor: "pointer",
+                      }}
+                      type="file"
+                      name="Patient Images"
+                      accept="image/*"
+                      onChange={updateProfileDataChange}
+                      placeholder="upload image"
+                    />
                   </Grid>
                 </Grid>
-                          </Grid>
-                          
-                          {/* image upload end */}
+              </Grid>
+
+              {/* image upload end */}
 
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <div className="zetamed_add_patient_basic_information">
@@ -505,195 +472,22 @@ let cityArray = []
                     align="center"
                     justify="center"
                   >
-                    <div className="zetamed_add_patient_name">Flat No.</div>
+                    <div className="zetamed_add_patient_name">Full Address</div>
                   </Grid>
                   <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
                     <input
                       className="zetamed_main_otp_actualinput"
                       required
-                      type="email"
+                      type="textarea"
                       placeholder="Flat no./Room No."
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                   </Grid>
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Street</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <input
-                      className="zetamed_main_otp_actualinput"
-                      required
-                      type="email"
-                      placeholder="Street"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
 
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Country</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                    >
-                      <option value="">Select Country..</option>
-                      {allCountry &&
-                        allCountry.map((e, i) => (
-                          <option key={i} value={e.country}>
-                            {e.country}
-                          </option>
-                        ))}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">State</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                    >
-                      <option value="">Select State</option>
-                      {allCountry &&
-                        allCountry
-                          .filter((e) => e.country === country)
-                          .map((p) =>
-                            p.state.map((s) => (
-                              <option key={s.id} value={s.state}>
-                                {s.state}
-                              </option>
-                            ))
-                          )}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              {/* select city */}
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">City</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                    >
-                      <option value="">City</option>
-                      {console.log(
-                        allCountry &&
-                          allCountry.filter(
-                            (e) =>
-                              e.country === country &&
-                              e.state.map((k) =>
-                                k.state === state
-                                  ? k.city.map((s) => cityArray.push(s.city))
-                                  : ""
-                              )
-                          )
-                      )}
-                      {cityArray &&
-                        cityArray.map((e, i) => (
-                          <option key={i} value={e}>
-                            {e}
-                          </option>
-                        ))}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              {/* zip code */}
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Zip Code</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <input
-                      className="zetamed_main_otp_actualinput"
-                      required
-                      type="text"
-                      placeholder="Zip Code"
-                      value={zipcode}
-                      onChange={(e) => setZipcode(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
 
               {/* medical information */}
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -728,9 +522,9 @@ let cityArray = []
                     />
                   </Grid>
                 </Grid>
-                          </Grid>
-                          
-                          {/* problem description */}
+              </Grid>
+
+              {/* problem description */}
               <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                 <Grid container>
                   <Grid
@@ -761,69 +555,32 @@ let cityArray = []
                     />
                   </Grid>
                 </Grid>
-                          </Grid>
-                          
-                          {/* add patient to certain group */}
-                        
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">
-                      Group
-                    </div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                                      <select
-                                                className="zetamed_main_otp_actualinput"
-                                                style={{ height: "40px" }}
-              required
-              value={patientGroupp}
-              onChange={(e) => setPatientGroupp(e.target.value)}
-            >
-              <option value="">Patient Group</option>
-              {patientGroup &&
-                patientGroup.map((e, i) => (
-                  <option key={i} value={e.id}>
-                    {e.disease}
-                  </option>
-                ))}
-            </select>
-                  </Grid>
-                </Grid>
-                          </Grid>
+
+              </Grid>
+            </Grid>
 
 
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={12} lg={12} xl={12} align='center' justify='center'>
-                      
-                      <button className="butons" type="submit" style={{marginTop:'7px',width:'40%'}}>
-                                <div className="left"></div>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} align='center' justify='center'>
 
-                                  Add Patient
-                                  <div className="right"></div>
+              <button className="butons" type="submit" style={{ marginTop: '7px', width: '40%' }}>
+                <div className="left"></div>
 
-                            </button>
-                      </Grid>
+                Add Patient
+                <div className="right"></div>
+
+              </button>
+            </Grid>
 
 
-         
-            
 
-           
-           
+
+
+
+
           </form>
         </Grid>
 
-        
+
       </Grid>
 
 

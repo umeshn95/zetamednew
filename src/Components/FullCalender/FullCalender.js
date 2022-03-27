@@ -20,11 +20,8 @@ const FullCalender = () => {
   const [appointAddCheck, setAppointAddCheck] = useState(false)
 
   const [appointmentData, setAppointmentData] = useState("")
-  const [addObj, setAddObj] = useState({status : false})
+  const [addObj, setAddObj] = useState({ status: false })
 
-  const addAppointmentFunc = () => {
-    setAppointAddCheck(true)
-  }
 
   useEffect(() => {
     if (patientAppointment && patientAppointment.length === 0) {
@@ -37,6 +34,7 @@ const FullCalender = () => {
       <Loader />
     )
   }
+
 
   return (
     <>
@@ -57,9 +55,6 @@ const FullCalender = () => {
             ""
         }
       </div>
-      <div>
-        <button onClick={() => addAppointmentFunc()}>Add Appointment</button>
-      </div>
       <FullCalendar
         plugins={[dayGridPlugin, Lists, TimeGrid, interactionPlugin]}
         initialView="timeGridWeek"
@@ -69,11 +64,11 @@ const FullCalender = () => {
           end: "dayGridMonth,timeGridDay,timeGridWeek,list", // will normally be on the right. if RTL, will be on the left
         }}
         dateClick={function (info) {
-          setAddObj({startDate : info.date, status : true})
+          setAddObj({ startDate: info.date, status: true })
           setAppointAddCheck(true)
         }}
         // select={function (info) {
-          
+
         //   alert("selected " + info.startStr + " to " + info.endStr);
         // }}
         slotMinTime="08:30:00"

@@ -4,17 +4,19 @@ import UpdateAppointment from './UpdateAppointment'
 import axios from 'axios'
 import { useAlert } from "react-alert";
 import Loader from '../../Loading/Loader'
-import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { patientAppointmentAction } from '../../../Actions/PatientAction';
 import Grid from "@mui/material/Grid";
-
+import AddPrescription from '../Prescription/AddPrescription';
+import PatientInfo from '../Patient/PatientInfo'
 
 const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
     const [cusLoading, setCusLoading] = useState(false)
     const [updateAppointmentCheck, setUpdateAppointmentCheck] = useState(false)
+    const [prescriptionCheck, setPrescriptionCheck] = useState(false)
+    const [patientInfoCheck, setPatientInfoCheck] = useState(false)
     const [conformation, setConformation] = useState("")
 
     const handleClose = () => {
@@ -64,6 +66,12 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
     const updateAppointmentFunc = () => {
         setUpdateAppointmentCheck(true)
     }
+    const prescriptionFunc = () => {
+        setPrescriptionCheck(true)
+    }
+    const patientInfoFunc = () => {
+        setPatientInfoCheck(true)
+    }
 
     if (cusLoading) {
         return (
@@ -71,6 +79,7 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
         )
     }
 
+    
     return (
         <>
             {
@@ -80,6 +89,22 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                         setUpdateAppointmentCheck={setUpdateAppointmentCheck}
                         setAppointViewCheck={setAppointViewCheck}
                         obj={obj}
+                    />
+                    :
+                    prescriptionCheck ? 
+                    <AddPrescription 
+                        prescriptionCheck={prescriptionCheck}
+                        setPrescriptionCheck={setPrescriptionCheck}
+                        setAppointViewCheck={setAppointViewCheck}
+                        obj={obj}
+                    />
+                    :
+                    patientInfoCheck ?
+                    <PatientInfo 
+                        patientInfoCheck={patientInfoCheck}
+                        setPatientInfoCheck={setPatientInfoCheck}
+                        // setAppointViewCheck={setAppointViewCheck}
+                        id={obj.patientId}
                     />
                     :
                     appointViewCheck ?
@@ -93,15 +118,15 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                                 </div>
                                 <div className='modal-body'>
                                     <Grid container>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Patient Name : <b>{obj.patientName}</b></p></Grid>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Problem : <b>{obj.title}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Problem : <b>{obj.patientName}</b></p></Grid>
+                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Patient Name : <b>{obj.title}</b></p></Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Start Time : <b>{obj.start}</b></p></Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>End Time : <b>{obj.end}</b></p></Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}><p className='normal_text'>Appointment Add Time: <b>{obj.createAt}</b></p></Grid>
                                         <Grid item xs={6} sm={6} md={4} lg={4} xl={4}><button className="custom-btn btn-6" onClick={() => updateAppointmentFunc()}>Update</button></Grid>
                                         <Grid item xs={6} sm={6} md={4} lg={4} xl={4}> <button className="custom-btn btn-6" onClick={() => deleteAppointment()}>Delete </button></Grid>
-                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4} align='center'>  <Link to={`/patient/${obj.patientId}`} ><button className="custom-btn btn-6">Full Info</button></Link></Grid>
-
+                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4}> <button onClick={() => prescriptionFunc()}>Appointment Done & Add Prescription </button></Grid>
+                                        <Grid item xs={6} sm={6} md={4} lg={4} xl={4} align='center'> <button className="custom-btn btn-6" onClick={() => patientInfoFunc()}>Full Info</button></Grid>
                                     </Grid>
 
                                     <div>
@@ -116,18 +141,16 @@ const ViewAppointment = ({ appointViewCheck, setAppointViewCheck, obj }) => {
                                             <option value="Select">Select</option>
                                                 <option value="Done">Done</option>
                                                 <option value="Cancel">Cancel</option>
-                                                <option value="Prossess">Prossess</option>
                                             </select>
                                             {conformation && conformation !== "Select"? 
                                             <div>
-                                            <button onClick={() => UpdateAppointmentFunc()}>Save</button>
+                                            <button onClick={() => UpdateAppointmentFunc()}>Only Save</button>
                                             </div>
                                             :
                                             ""
                                             }
                                         </Grid>
                                         <br />
-
                                     </div>
                                 </div>
                                 <div className='modal-footer'>

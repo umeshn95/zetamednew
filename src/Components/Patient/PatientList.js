@@ -1,9 +1,9 @@
 import { React, useEffect, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { patientAction } from "../../Actions/PatientAction";
-import { Link } from "react-router-dom";
 import Loader from "../Loading/Loader";
 import Grid from "@mui/material/Grid";
+import PatientInfo from "../Model/Patient/PatientInfo"
 
 import "./styles.scss";
 
@@ -16,6 +16,9 @@ const PatientList = () => {
 
   const [currentPage, setCurrentPage] = useState("1");
   const [dataFilter, setDataFilter] = useState("");
+  
+  const [patientInfoCheck, setPatientInfoCheck] = useState(false);
+  const [id, setId] = useState("");
 
   const setCurrentPageNo = (event, value) => {
     setCurrentPage(value);
@@ -55,6 +58,11 @@ const PatientList = () => {
 
   }
 
+  const patientInfoFunc = (patientId) => {
+    setId(patientId)
+    setPatientInfoCheck(true)
+  }
+
   useEffect(() => {
     if (patient && patient.length === 0) {
       dispatch(patientAction(currentPage, dataFilter));
@@ -88,7 +96,16 @@ const PatientList = () => {
 
   return (
     <Fragment>
-      <Grid container style={{ border: "1px solid #b4cef8" }}>
+    {
+      patientInfoCheck ?
+                    <PatientInfo 
+                        patientInfoCheck={patientInfoCheck}
+                        setPatientInfoCheck={setPatientInfoCheck}
+                        id={id}
+                    />
+                    :
+                    <div>
+                    <Grid container style={{ border: "1px solid #b4cef8" }}>
         <div className="zetamed_patient_list_heading">
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Grid container justify="center">
@@ -217,15 +234,14 @@ const PatientList = () => {
                       </Grid>
                       <Grid item xs={0} sm={0} md={2} lg={2} xl={2} align='center' justify='center'>
 
-                        <Link to={`/patient/${e.id}`}>
-                          <button className="butons" style={{ marginTop: '20px' }}>
+                        
+                          <button onClick={() => patientInfoFunc(e.id)} className="butons" style={{ marginTop: '20px' }}>
                             <div className="left"></div>
 
                             Full Info
                             <div className="right"></div>
 
                           </button>
-                        </Link>
                        
 
                       </Grid>
@@ -237,6 +253,9 @@ const PatientList = () => {
           ))}
       </Grid>
       <Pagination count={patient && patient.pages} color="secondary" page={patient && patient.page} onChange={setCurrentPageNo} />
+                    </div>
+    }
+      
     </Fragment>
   );
 };

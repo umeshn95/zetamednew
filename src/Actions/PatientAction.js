@@ -25,6 +25,10 @@ import {
     SUCCESS_PATIENT_SEARCH,
     FAIL_PATIENT_SEARCH,
 
+    // Appointment Search
+    REQUEST_APPOINTMENT_SEARCH,
+    SUCCESS_APPOINTMENT_SEARCH,
+    FAIL_APPOINTMENT_SEARCH,
 
 
 } from '../Constants/PatientConstants'
@@ -38,7 +42,6 @@ export const patientAction = (page, filter) => async (dispatch) => {
         dispatch({ type: REQUEST_PATIENT })
         let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/?query=${filter}&page=${page}`, config)
         dispatch({ type: SUCCESS_PATIENT, payload: data })
-        console.log(data)
     } catch (error) {
         dispatch({ type: FAIL_PATIENT, payload: error.response.details })
     }
@@ -87,3 +90,14 @@ export const patientSearchAction = () => async (dispatch) => {
         dispatch({ type: FAIL_PATIENT_SEARCH , payload: error.response.details })
     }
 }
+
+export const appointmentSearchAction = () => async (dispatch) => {
+    try {
+        dispatch({ type: REQUEST_APPOINTMENT_SEARCH })
+        let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/patient/done-appontment/`, config)
+        dispatch({ type: SUCCESS_APPOINTMENT_SEARCH , payload: data })
+    } catch (error) {
+        dispatch({ type: FAIL_APPOINTMENT_SEARCH , payload: error.response.details })
+    }
+}
+

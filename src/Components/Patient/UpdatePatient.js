@@ -1,8 +1,7 @@
 import { Fragment, React, useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
-import { patientAction, patientGroupAction } from "../../Actions/PatientAction";
-import { countryAction } from "../../Actions/MicroApiAction";
+import { patientAction } from "../../Actions/PatientAction";
 import Calendar from 'react-calendar';
 import { useAlert } from "react-alert";
 import { PatienSingleAction } from '../../Actions/PatientAction';
@@ -10,7 +9,7 @@ import Loader from "../Loading/Loader";
 import Grid from "@mui/material/Grid";
 
 
-const UpdatePatient = ({ match }) => {
+const UpdatePatient = ({ updatePatientCheck, setUpdatePatientCheck, id }) => {
     const alert = useAlert();
     const userInfo = JSON.parse(localStorage.getItem("user-details"));
     const { loading, patientSingle } = useSelector((state) => state.patientSingle)
@@ -30,13 +29,9 @@ const UpdatePatient = ({ match }) => {
     const [proofId, setProofId] = useState("");
     const [mobileNo, setMobileNo] = useState("");
     const [email, setEmail] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [zipcode, setZipcode] = useState("");
+    const [address, setAddress] = useState("");
     const [problem, setProblem] = useState("");
     const [problemDescription, setProblemDescription] = useState("");
-    const [patientGroupp, setPatientGroupp] = useState("");
     const [calenderTrueFalse, setCalenderTrueFalse] = useState(false);
 
     const [cusLoading, setCusLoading] = useState(false);
@@ -53,14 +48,9 @@ const UpdatePatient = ({ match }) => {
             myForm.set("proofId", proofId);
             myForm.set("mobileNo", mobileNo);
             myForm.set("email", email);
-            myForm.set("city", city);
-            myForm.set("state", state);
-            myForm.set("country", country);
-            myForm.set("zipcode", zipcode);
+            myForm.set("address", address);
             myForm.set("problem", problem);
             myForm.set("problemDescription", problemDescription);
-            let patientGroup = patientGroupp
-            myForm.set("patientGroup", patientGroup)
             let patientImage = selectedImage;
             myForm.set("patientImage", patientImage);
 
@@ -72,7 +62,7 @@ const UpdatePatient = ({ match }) => {
                 },
             };
             const { data } = await axios.put(
-                `${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/${match.params.id}/`, myForm, config);
+                `${process.env.REACT_APP_BACKEND_URL}/api/patient/get-patient/${id}/`, myForm, config);
             if (data.status === 201) {
                 alert.success(data.details)
                 sessionStorage.setItem("petientSignal", "2")
@@ -112,17 +102,11 @@ const UpdatePatient = ({ match }) => {
         if (patient && patient.length === 0) {
             dispatch(patientAction(sessionStorage.getItem("page"), sessionStorage.getItem("query")));
           }
-        if (allCountry && allCountry.length === 0) {
-            dispatch(countryAction())
-        }
-        if (patientGroup && patientGroup.length === 0) {
-            dispatch(patientGroupAction())
-        }
         if (patientSingle && patientSingle.length === 0) {
-            dispatch(PatienSingleAction(match.params.id))
+            dispatch(PatienSingleAction(id))
         } else {
-            if (patientSingle && patientSingle.data[0].id !== match.params.id) {
-                dispatch(PatienSingleAction(match.params.id))
+            if (patientSingle && patientSingle.data[0].id !== id) {
+                dispatch(PatienSingleAction(id))
             }
         }
         setAge(loading === false ? patientSingle && patientSingle.data[0].age : "")
@@ -130,17 +114,13 @@ const UpdatePatient = ({ match }) => {
         setGender(loading === false ? patientSingle && patientSingle.data[0].gender : "")
         setMobileNo(loading === false ? patientSingle && patientSingle.data[0].mobileNo : "")
         setEmail(loading === false ? patientSingle && patientSingle.data[0].email : "")
-        setProblem(loading === false ? patientSingle && patientSingle.data[0].problem : "")
         setWhichProof(loading === false ? patientSingle && patientSingle.data[0].whichProof : "")
         setProofId(loading === false ? patientSingle && patientSingle.data[0].proofId : "")
-        setCity(loading === false ? patientSingle && patientSingle.data[0].city : "")
-        setState(loading === false ? patientSingle && patientSingle.data[0].state : "")
-        setCountry(loading === false ? patientSingle && patientSingle.data[0].country : "")
-        setZipcode(loading === false ? patientSingle && patientSingle.data[0].zipcode : "")
-        setPatientGroupp(loading === false ? patientSingle && patientSingle.patientGroupId : "")
+        setAddress(loading === false ? patientSingle && patientSingle.data[0].address : "")
+        setProblem(loading === false ? patientSingle && patientSingle.data[0].problem : "")
         setProblemDescription(loading === false ? patientSingle && patientSingle.data[0].problemDescription : "")
 
-    }, [dispatch, loading, allCountry, patientGroup, patientSingle, match.params.id, patient])
+    }, [dispatch, loading, allCountry, patientGroup, patientSingle, id, patient])
 
 
     if (loading || cusLoading) {
@@ -149,7 +129,6 @@ const UpdatePatient = ({ match }) => {
         )
     }
 
-    let cityArray = []
     return (
         <Fragment>
 
@@ -526,11 +505,6 @@ const UpdatePatient = ({ match }) => {
                           
                           {/* image upload end */}
 
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <div className="zetamed_add_patient_basic_information">
-                  Adress <hr />
-                </div>
-              </Grid>
               <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                 <Grid container>
                   <Grid
@@ -543,191 +517,16 @@ const UpdatePatient = ({ match }) => {
                     align="center"
                     justify="center"
                   >
-                    <div className="zetamed_add_patient_name">Flat No.</div>
+                    <div className="zetamed_add_patient_name">Full Address</div>
                   </Grid>
                   <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
                     <input
                       className="zetamed_main_otp_actualinput"
                       required
-                      type="email"
-                      placeholder="Flat no./Room No."
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Street</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <input
-                      className="zetamed_main_otp_actualinput"
-                      required
-                      type="email"
-                      placeholder="Street"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Country</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                    >
-                      <option value="">Select Country..</option>
-                      {allCountry &&
-                        allCountry.map((e, i) => (
-                          <option key={i} value={e.country}>
-                            {e.country}
-                          </option>
-                        ))}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">State</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                    >
-                      <option value="">Select State</option>
-                      {allCountry &&
-                        allCountry
-                          .filter((e) => e.country === country)
-                          .map((p) =>
-                            p.state.map((s) => (
-                              <option key={s.id} value={s.state}>
-                                {s.state}
-                              </option>
-                            ))
-                          )}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              {/* select city */}
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">City</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <select
-                      className="zetamed_main_otp_actualinput"
-                      style={{ height: "40px" }}
-                      required
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                    >
-                      <option value="">City</option>
-                      {console.log(
-                        allCountry &&
-                          allCountry.filter(
-                            (e) =>
-                              e.country === country &&
-                              e.state.map((k) =>
-                                k.state === state
-                                  ? k.city.map((s) => cityArray.push(s.city))
-                                  : ""
-                              )
-                          )
-                      )}
-                      {cityArray &&
-                        cityArray.map((e, i) => (
-                          <option key={i} value={e}>
-                            {e}
-                          </option>
-                        ))}
-                    </select>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              {/* zip code */}
-
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">Zip Code</div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                    <input
-                      className="zetamed_main_otp_actualinput"
-                      required
-                      type="text"
-                      placeholder="Zip Code"
-                      value={zipcode}
-                      onChange={(e) => setZipcode(e.target.value)}
+                      type="textarea"
+                      placeholder="Full Address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -802,45 +601,8 @@ const UpdatePatient = ({ match }) => {
                           </Grid>
                           
                           {/* add patient to certain group */}
-                        
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={3}
-                    sm={3}
-                    md={2}
-                    lg={1}
-                    xl={1}
-                    align="center"
-                    justify="center"
-                  >
-                    <div className="zetamed_add_patient_name">
-                      Group
-                    </div>
-                  </Grid>
-                  <Grid item xs={8.5} sm={9} md={10} lg={8} xl={9}>
-                                      <select
-                                                className="zetamed_main_otp_actualinput"
-                                                style={{ height: "40px" }}
-              required
-              value={patientGroupp}
-              onChange={(e) => setPatientGroupp(e.target.value)}
-            >
-              <option value="">Patient Group</option>
-              {patientGroup &&
-                patientGroup.map((e, i) => (
-                  <option key={i} value={e.id}>
-                    {e.disease}
-                  </option>
-                ))}
-            </select>
-                  </Grid>
-                </Grid>
-                          </Grid>
 
-
-                      </Grid>
+                  </Grid>
                       <Grid item xs={12} sm={12} md={12} lg={12} xl={12} align='center' justify='center'>
                       
                       <button className="butons" type="submit" style={{marginTop:'7px',width:'40%'}}>
@@ -851,13 +613,6 @@ const UpdatePatient = ({ match }) => {
 
                             </button>
                       </Grid>
-
-
-         
-            
-
-           
-           
           </form>
         </Grid>
 

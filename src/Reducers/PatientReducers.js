@@ -24,6 +24,13 @@ import {
     REQUEST_PATIENT_SEARCH,
     SUCCESS_PATIENT_SEARCH,
     FAIL_PATIENT_SEARCH,
+    
+    // Appointment Search
+    REQUEST_APPOINTMENT_SEARCH,
+    SUCCESS_APPOINTMENT_SEARCH,
+    FAIL_APPOINTMENT_SEARCH,
+
+
 } from '../Constants/PatientConstants'
 
 
@@ -46,6 +53,12 @@ const initialStatePatientAppointment = {
 const initialStatePatientSearch = {
     patientSearch: []
 }
+
+const initialStateAppointmentSearch = {
+    appointmentSearch: []
+}
+
+
 
 // Patien list
 export const PatientReducer = createReducer(initialStatePatient, {
@@ -135,6 +148,25 @@ export const PatientSearchReducer = createReducer(initialStatePatientSearch, {
     },
 
     [FAIL_PATIENT_SEARCH]: (state, action) => {
+        state.error = action.payload.data.details
+        state.loading = false
+    },
+
+}) 
+
+// Appointment Search
+export const AppointmentSearchReducer = createReducer(initialStateAppointmentSearch, {
+
+    [REQUEST_APPOINTMENT_SEARCH]: (state) => {
+        state.loading = true
+    },
+
+    [SUCCESS_APPOINTMENT_SEARCH]: (state, action) => {
+        state.appointmentSearch = action.payload
+        state.loading = false
+    },
+
+    [FAIL_APPOINTMENT_SEARCH]: (state, action) => {
         state.error = action.payload.data.details
         state.loading = false
     },
