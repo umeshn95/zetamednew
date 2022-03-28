@@ -37,6 +37,7 @@ function App() {
         <Prodected exact path="/otp-verify" component={Otp} />
         <Prodected exact path="/registration" component={Registration} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Homepage} />
         <Route exact path="/home" component={Homepage} />
         <Route exact path="/password-reset-email" component={ResetPasswordEmail} />
         <Route exact path="/password-reset/:token" component={ResetPassword} />

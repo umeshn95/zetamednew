@@ -9,6 +9,27 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileAction } from '../../../Actions/AuthenticationAction';
 
+
+// mui modal
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
+
 const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointViewCheck, obj }) => {
     const userInfo = JSON.parse(localStorage.getItem('user-details'))
 
@@ -128,13 +149,35 @@ const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointVi
         <>
             {
                 prescriptionCheck ?
+                    <>
                     <div className='modal' onClick={() => handleClose()}>
-                        <div className='modal-content' onClick={e => e.stopPropagation()}>
+                        <div className='modal-content_prescription' onClick={e => e.stopPropagation()}>
                             <div className='modal-header'>
                                 <Grid container >
-                                    <Grid item xl={6}><h4 className='modal-title'>Update Appointment</h4></Grid>
-                                    <Grid item xl={6} align='right' style={{ cursor: 'pointer' }}>
-                                        <img onClick={() => handleClose()} alt="img" src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png" /> </Grid>
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                                                <Grid container align='center' spacing={1}>
+                                                    <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
+                                                        <div className='zetamed_prescription_addprescription'>Add Prescription</div>
+                                            </Grid>
+                                            <Grid item xs={2} sm={2} md={2} lg={2} xl={2} onClick={()=>handleClose()} align='right'>
+                                                        <div className=''> <img alt="img" src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png" /></div>
+                                                    </Grid>
+                                                   
+                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
+                                                        <div className='zetamed_prescription_patientname'> <img alt='p1' src="https://img.icons8.com/ios-glyphs/12/000000/user--v1.png" />{patientData && patientData[0] && patientData[0].name}</div>
+                                                    </Grid>
+                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
+                                                        <div className='zetamed_prescription_patientname'><img alt='p2' src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/12/000000/external-doctor-dental-kiranshastry-lineal-kiranshastry.png" />{userInfo.first_name} </div>
+                                                    </Grid>
+                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
+                                                        <div className='zetamed_prescription_patientname'><img alt='p3' src="https://img.icons8.com/ios/12/000000/calendar-plus.png" />{todayDate()}</div>
+                                                    </Grid>
+                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
+                                                        <div className='zetamed_prescription_patientname'><img alt='p4' src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/12/000000/external-edit-interface-kiranshastry-lineal-kiranshastry-1.png" />{profile && profile.data && profile.data[0].clinicName}</div>
+                                                    </Grid>
+                                                   
+                                                </Grid>
+                                            </Grid>
                                 </Grid>
                             </div>
                             <div className='modal-body'>
@@ -142,51 +185,26 @@ const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointVi
                                 <div className='prescription_main'>
                                     <div className='prescription_sub'>
                                         <Grid container>
-                                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                <Grid container align='center' spacing={1}>
-                                                    <Grid item xs={12} sm={12} md={2.4} lg={2.4} xl={2.4}>
-                                                        <div className='zetamed_prescription_addprescription'>Add Prescription</div>
-                                                    </Grid>
-                                                    <h5>Clinic Name : {profile && profile.data && profile.data[0].clinicName}</h5>
-                                                    <h5>Doctor Name : {userInfo.first_name}</h5>
-                                                    <h5>Doctor email : {userInfo.email}</h5>
-                                                    <h5>Date : {todayDate()}</h5>
-                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
-                                                        <div className='zetamed_prescription_patientname'> <img alt='p1' src="https://img.icons8.com/ios-glyphs/12/000000/user--v1.png" />Patient Name</div>
-                                                    </Grid>
-                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
-                                                        <div className='zetamed_prescription_patientname'><img alt='p2' src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/12/000000/external-doctor-dental-kiranshastry-lineal-kiranshastry.png" />Doctor Name </div>
-                                                    </Grid>
-                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
-                                                        <div className='zetamed_prescription_patientname'><img alt='p3' src="https://img.icons8.com/ios/12/000000/calendar-plus.png" />Full Date</div>
-                                                    </Grid>
-                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2}>
-                                                        <div className='zetamed_prescription_patientname'><img alt='p4' src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/12/000000/external-edit-interface-kiranshastry-lineal-kiranshastry-1.png" />Change</div>
-                                                    </Grid>
-                                                    <Grid item xs={3} sm={3} md={2.4} lg={2.4} xl={1.2} align='right'>
-                                                        <div className=''> <img alt="img" src="https://img.icons8.com/external-doodle-bomsymbols-/28/000000/external-close-doodle-web-design-device-set-2-doodle-bomsymbols-.png" /></div>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                                           
+                                            <Grid item xs={12} sm={12} md={12} lg={9} xl={9} >
                                                 <Grid container>
-                                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{ display: "flex", alignItems: "center" }}>
-                                                        <div><img src="https://img.icons8.com/stickers/80/000000/user.png" alt='iconsuser' /></div>
-                                                        <div className='zetamed_prescription_patientname1'>Patient Name {patientData && patientData[0] && patientData[0].name}</div>
+                                                    <Grid item xs={12} sm={12} md={6} lg={9} xl={9} style={{ display: "flex", alignItems: "center" }}>
+                                                        <div><img src="https://img.icons8.com/stickers/50/000000/user.png" alt='iconsuser' /></div>
+                                                        <div className='zetamed_prescription_patientname1'> {patientData && patientData[0] && patientData[0].name}</div>
                                                     </Grid>
-                                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                    <Grid item xs={12} sm={12} md={6} lg={3} xl={3} align='right' >
                                                         <div className='zetamed_prescription_mobile'> <img src="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/19/000000/external-phone-notification-xnimrodx-lineal-gradient-xnimrodx.png" alt='phone' />
-                                                            <div >Mobile {patientData && patientData[0] && patientData[0].mobileNo}</div>
+                                                            <div > {patientData && patientData[0] && patientData[0].mobileNo}</div>
                                                         </div>
 
-                                                        <div className='zetamed_prescription_mobile'> <img src="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/19/000000/external-email-contact-us-xnimrodx-lineal-gradient-xnimrodx-4.png" alt='email' /> email {patientData && patientData[0] && patientData[0].email}</div>
+                                                        <div className='zetamed_prescription_mobile'> <img src="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/19/000000/external-email-contact-us-xnimrodx-lineal-gradient-xnimrodx-4.png" alt='email' />  {patientData && patientData[0] && patientData[0].email}</div>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
 
                                             {!printCheck ? inputField.map((field, index) =>
                                                 <>
-                                                    {index >= 1 ? <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
+                                                    {index >= 1 ? <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                                         <Grid key={index} container>
                                                             <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
                                                                 <Grid container>
@@ -294,7 +312,7 @@ const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointVi
                                                     </Grid> :
 
 
-                                                        <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
+                                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                                             <Grid container>
                                                                 <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
                                                                     <Grid container>
@@ -413,9 +431,12 @@ const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointVi
 
 
 
-                                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                <button className='button-66' onClick={() => savePresFunc("1")}>Save Prescription</button>
-                                                <button className='button-66' onClick={() => savePresFunc("2")}>Save & Print Prescription</button>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} align='center'>
+                                                    <Grid container>
+                                                        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}> <button className='button-66' onClick={() => savePresFunc("1")}>Save Prescription</button>
+                                                </Grid>
+                                                        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}><button className='button-66' onClick={() => savePresFunc("2")}>Save & Print Prescription</button></Grid>
+                                               </Grid>
                                             </Grid>
                                         </Grid>
                                     </div>
@@ -425,7 +446,8 @@ const AddPrescription = ({ prescriptionCheck, setPrescriptionCheck, setAppointVi
                             <div className='modal-footer'>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                        </>
                     :
                     ""
             }
@@ -458,4 +480,34 @@ function PrintComp({ data }) {
             </div>
         </>
     )
+}
+
+
+
+
+export  function BasicModal() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
 }

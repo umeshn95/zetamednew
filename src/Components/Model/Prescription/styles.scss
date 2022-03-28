@@ -1,5 +1,5 @@
 .prescription_main{
-    width: 75%;
+    width: 93%;
 }
 
 .zetamed_prescription_addprescription{
@@ -104,4 +104,19 @@ cursor: pointer;
     padding: 16px 44px;
     min-width: 150px;
   }
+}
+
+.modal-content_prescription{
+    width: 70%;
+    background-color: #fff;
+    z-index: 999;
+    padding: 10px;
+    overflow: scroll;
+    height: 100vh;
+}
+.modal-content{
+    overflow: scroll;
+    height: 70vh;
+    width: 70%;
+
 }
